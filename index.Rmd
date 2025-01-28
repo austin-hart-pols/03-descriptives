@@ -40,177 +40,205 @@ knitr::include_graphics("assets/classlogo.png")
 ]
 
 .pull-right[
-# 01 - Introductions
+# 03 - Describing data
 
-- Purpose of the course
-
-- "Basement Tapes" discussion
-
-- Syllabus, etc
-
-- Scientific inquiry
+- Summarize categorical data  
+- Summarize quantitative data  
+- More work with R! (QoG data)
 
 ]
 
 
 ---
-# What's the purpose of this course?
+# Overview of Summary Statistics
+
+- **Why summarize?** 
+
+  Need to synthesize findings from a large number (large-N) of records.
+
+- **What's the aim?** 
+
+  Characterize variation: (i) what's the shape of the distribution? (ii) what's a typical/atypical value in the data? (iii) to what extent do cases differ? 
+
+- **How to summarize?** 
+
+  Rely on descriptive statistics -- indices that allow us to characterize key elements of a given body of data.
+
+- **Which statistics to use?** 
+
+  The measurement scale determines which stats are best.
+
+
+---
+# Summarizing categorical data
+## Counts and frequencies
+
+- RECALL: Scores on categorical variables capture qualitative differences
+
+- What to show?  
+  - Relative frequency (nominal) or cumulative frequency (ordinal)
+  - ...or a bar chart
+
+- What to report?
+  - Mode of distribution: score that appears most frequently.   
+  - Median (ordinal): score at the 50th percentile.  
+  - Shape: flat, single-peaked, bimodal, or what?  
+  - Key takeaway: what do you want someone to remember?  
+  
+  
+---
+# Apply: Describe party competition
 
 .pull-left[
-### Introduce empirical research
-
-- **STATISTICS**
-  - Field concerned with collecting and analyzing data  
-  - Focused on variation and uncertainty
-
-- **THE RESEARCH PROCESS**  
-  - Roots in the scientific project  
-  - From question to findings  
-  - Evaluating research
-
-
+1. Start new R script. 
+2. Paste in "setup" from last week.  
+3. Open QoG data and codebook.
+4. Describe data on `br_elect`
+  - Frequency table  
+  - Text description
 ]
 
 .pull-right[
-### Support University mission
 
-- Research is the best of what we do
+```{r, eval=FALSE, echo=TRUE}
+# Tabulation
+  t1 <-
+    df %>%
+    count(var.name) %>%
+    mutate(
+      percent = n / sum(n) * 100,
+      cumulative = cumsum(percent)
+    )
 
-- Asking and answering questions is still a radical act!
-
-- Scientific inquiry *can* support and strengthen free-thinking society
+# Visual
+  barplot(percent ~ var.name, t1)
+```
 ]
 
-
----
-# Basement Tapes
-### In-class discussion
-
-1. What theory motivates Frantz’s study? Identify the key cause and the outcome he seeks to explain.  
-2. What did Frantz know from prior studies, and why were those findings seen as incomplete or insufficient?  
-3. How does Frantz test his core hypothesis? Be specific about the design of his elaborate study.  
-4. What do his results show? What are we to make of the findings? 
-
-For reference: [podcast](https://www.pushkin.fm/podcasts/revisionist-history/the-basement-tapes#play) (S2E10) and [study results](https://www.ahajournals.org/doi/pdf/10.1161/01.atv.9.1.129)
-
----
-# Get to know the course
-
-- Let's visit the [living course syllabus](https://docs.google.com/document/d/1V5JLruDU9m9_eSnQqXQZ5-yDZCGlc9GZOQsVNcf3C7Q/edit?usp=sharing)
-
-- Expectations for class  
-  - We begin on time  
-  - Take notes and ask questions  
-  - Leave Slacks, chats, etc. behind
-
-- Outside of class  
-  - Do the reading  
-  - Give yourself time to do assignments  
-  - Be in touch!  
 
 ---
 class: inverse, middle
 
-# Foundations of scientific inquiry
+# Summarizing quantitative data
 
-1. Where does science come from?  
-2. What defines scientific research?  
+1. Visualizing distributions
+
+2. Measures of center
+
+3. Measures of variability
+
+---
+# Graphing quantitative data
+
+> Visuals provide a wealth of information on the distribution of scores in the data you've collected. Showing the shape, range, and center of the data is critical to communicating findings.
+
+.pull-left[
+### Histogram
+- Bar graph for quantitative measures. 
+
+- Shows the frequency of cases within discrete "bins" of values on the scale.
+]
+
+.pull-right[
+### Box plot
+- Visual that marks critical ranks/positions 
+
+- Shows the quartiles, extreme values, and outliers of a distribution
+]
 
 
 ---
-# Origins of the modern scientific project
+# Measures of center 
+
+> A starting point for making sense of data, measures of central tendency distill information into a single, easy value. Facilitate comparisons, provide useful benchmarks, etc. 
 
 .pull-left[
 
-```{r, out.width="70%"}
-knitr::include_graphics("assets/bacon.jpg")
-```
+### Mean
 
+- The average score in the data. The center of gravity.  
+- Denoted $\bar{y}$ or $mu$  
+- Sensitive to outliers  
+
+$$\mu = E[Y] = \frac{\sum{y_i}}{n}$$
 ]
 
 .pull-right[
 
-### Bacon's new empiricism
+### Median  
 
-- Knowledge through observation and experimentation
-
-- Inductive reasoning
-  - Move from specific to general 
-  - Probabilistic claims    
-  - Conclusions open to new evidence
+- Value at the 50th percentile.  
+- Divides data into upper-lower halves.  
+- Most appropriate in presence of skew.
   
-- Progress by rejecting bad ideas 
+]
+
+---
+# Measures of variability: dispersion
+
+> Variability is the core of statistical research. How consistent or homogenous are the scores around the mean? Are the deviations evenly divided? 
+
+.pull-left[
+### Standard deviation
+
+- Average deviation from mean.  
+- Denoted $s$ or $\sigma$
+- Empirical rule: 68/95/99% in 1/2/3 SDs   
+
+$$
+s = E[(Y - \mu)^2]^{\frac{1}{2}} = \sqrt{\frac{\sum{(y_i - \bar{y})^2}}{n-1}}
+$$
+- $Z$-score: standard distance, $Z=(y_i - \mu)/\sigma$. 
+
+]
+
+.pull-right[
+### IQR and range
+
+- Interquartile range: upper minus lower quartile score. Captures middle 50% of cases.  
+- Range: maximum minus minimum scores.  
 
 ]
 
 ---
-# Logic and structure of scientific inquiry
+# Summarizing quantitative data
+## Recap
 
-.panelset[
-.panel[.panel-name[Process]
-
-- Question and expectations
-
-- Study 
-  - Research design (plan)  
-  - Data collection  
-  - Analysis  
+- What to show?
+  - Histogram: shows shape of distribution. 
+  - ...and/or summary statistics
   
-- Report findings  
+- What to report?
+  - Stats: central tendency and variation
+  - Shape: normal, u-shaped, flat, skewed  
+  - Key takeaway: what do you want someone to remember
 
-- New questions
 
-]
 
-.panel[.panel-name[Question]
 
-.pull-left[ 
-- Study "effects of causes"
-  - Exposure variable: cause, $X$
-  - Outcome variable: effect, $Y$
+---
+# Apply: Describe women's rep
 
-- Theory: what we *think* we know about $X \rightarrow Y$
-
-- Hypotheses: observable implications of theory
+.pull-left[
+1. Continue prior script w/QoG data.  
+2. Describe data on `wdi_wip`.  
+  - Create histogram and box plot.  
+  - Calculate summary stats.  
+  - Text description.  
 ]
 
 .pull-right[
-
-> **Theories** are general stories about the way things work. 
-
-> **Hypotheses** are specific predictions, derived from theory, about what we should see in the data.
-
-]
-]
-
-.panel[.panel-name[Study]
-
-- Research design
-  - *Experiment (RCT)*: the researcher exposes units to different values of treatment at random.    
-  - *Observational*: the researcher observes and records values of the variables as they are.  
-
-- Data collection  
-
-- Statistical analysis  
-  - Characterize the relationship  
-  - Is it systematic? 
+```{r, eval=FALSE, echo=TRUE}
+# Graphs
+  boxplot(data$variable)
+  hist(data$variable)
+  
+# Summary stats
+  summary(data$variable)
+  sd(data$variable, na.rm = T)
+```
 
 ]
-
-.panel[.panel-name[Report]
-
-- Answer your question given the analysis
-
-- Consider the validity of your conclusion  
-  - Internal validity: have you ruled out alternative explanations and sources of bias?  
-  - External validity: do the results generalize to other cases, places, treatments, and outcomes?
-
-- What do your findings mean for extant theory?
-
-]
-]
-
-
 
 
 ---

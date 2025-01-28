@@ -1,9 +1,10 @@
-# Week 1: Intro to scientific inquiry
+# Week 3: Describing data
 
 
 ### Agenda
 
-- Purpose of the course  
-- "Basement Tapes" discussion  
-- Syllabus  
-- Logic and structure of empirical research  
+- Describe categorical data  
+- Describe quantitative data  
+- More work with R!
+
+
